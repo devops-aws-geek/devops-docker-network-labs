@@ -1,4 +1,4 @@
-#Demo: Default bridge network with cli
+# Demo: Default bridge network with cli
 
 Let’s start by running two Nginx containers (in the background with -d) named app1 and app2:
 
@@ -32,7 +32,9 @@ Using IP addresses is neither reliable nor easy to maintain since more container
 
 If we used the legacy --link option, we could have used the name of the container instead of the IP. But there are major drawbacks to using the default bridge (as discussed in the previous section), and using the --link is discouraged.
 
-#Demo: User-defined bridge network with cli
+---
+
+# Demo: User-defined bridge network with cli
 
 A user-defined bridge network has to be created before it can be used. So let’s create one named my-bridge:
 `docker network create --driver bridge my-bridge`
@@ -69,7 +71,9 @@ No again.
 
 We cannot reach app2 from app3 (or app4) and vice versa because they are on two separate networks, the default bridge and our user-defined my-bridge.
 
-#Demo: publishing container ports
+---
+
+# Demo: publishing container ports
 
 Containers connected to the same bridge network effectively expose all ports to each other. For a container port to be accessible from the host machine or hosts of external networks, that container port must be published using the -p or --publish flag.
 
@@ -93,7 +97,9 @@ If we now try to curl on port 3000 of the host:
 
 We should see the Nginx index page.
 
-#Clean Up
+---
+
+# Clean Up
 
 We can remove all containers on the system using the following command:
 `docker rm -f $(docker ps -aq)`
