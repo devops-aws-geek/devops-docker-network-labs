@@ -36,15 +36,15 @@ Run the below command to verify that both nodes are part of the Swarm
 
 Create a new overlay network called “my-overlay” by running below command
 
-`docker network create -d overlay overnet`
+`docker network create -d overlay my-overlay`
 
 `docker network ls`
 
 The other new networks (ingress and docker_gwbridge) were created automatically when the Swarm cluster was created
 
-To view more detailed information about the “overnet” network. You will need to run this command from the first terminal.
+To view more detailed information about the “my-overlay” network. You will need to run this command from the first terminal.
 
-`docker network inspect overnet`
+`docker network inspect my-overlay`
 
 # Creating a Docker Service in the swarm cluster
 
