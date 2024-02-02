@@ -3,11 +3,13 @@
 Let’s start by running two Nginx containers (in the background with -d) named app1 and app2:
 
 `docker run -d --name app1 nginx:alpine`
+
 `docker run -d --name app2 nginx:alpine`
 
 We can check that Nginx is in fact running on both containers by using docker exec to run curl localhost on both containers:
 
 `docker exec app1 curl localhost`
+
 `docker exec app2 curl localhost`
 
 [^1]:docker exec is used to execute a command inside a running container.
@@ -21,9 +23,11 @@ Trying to reach app2 from app1 using the hostname app2 will not work since DNS d
 `docker exec app1 curl app2`
 
 Let’s get the IP address of app2 with:
+
 `docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' app2`
 
 If we now try to reach app2 from app1 again, but with the IP address:
+
 `docker exec app1 curl <ip>`
 
 We should see that it works!
@@ -37,28 +41,35 @@ If we used the legacy --link option, we could have used the name of the containe
 # Demo: User-defined bridge network with cli
 
 A user-defined bridge network has to be created before it can be used. So let’s create one named my-bridge:
+
 `docker network create --driver bridge my-bridge`
 
 NOTE: since bridge is the default network driver, specifying --driver bridge in the command is optional.
 
 We will run two containers again and name them app3 and app4:
+
 `docker run -d --name app3 --network my-bridge nginx:alpine`
+
 `docker run -d --name app4 --network my-bridge nginx:alpine`
 
 Again, let’s test if Nginx is running properly on both containers:
 
 `docker exec app3 curl localhost`
+
 `docker exec app4 curl localhost`
 
 On successfully printing the index pages, let’s move on to communication between the containers.
 
 If we try to reach app4 from app3 using the hostname app4:
+
 `docker exec app3 curl app4`
 
 The same thing will also work when reaching app3 from app4:
+
 `docker exec app4 curl app3`
 
 Will we be able to reach app2 from app3 using DNS?
+
 `docker exec app3 curl app2`
 
 Nope.
@@ -102,7 +113,9 @@ We should see the Nginx index page.
 # Clean Up
 
 We can remove all containers on the system using the following command:
+
 `docker rm -f $(docker ps -aq)`
 
 Let’s also remove the my-bridge as well.
+
 `docker network rm my-bridge`
